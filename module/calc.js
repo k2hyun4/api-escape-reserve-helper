@@ -20,8 +20,12 @@ const _calcOpenDateRange = (now, lastOpenDate, openTime) => {
 	return now.isAfter(_makeDateTime(now, openTime)) ? rangeDate : rangeDate + 1;
 };
 
-const _makeResponse = (bookableDateTime, now) => {
-	return '결과 하하호호';
+const _makeResponse = (bookableDateTime, nowYear) => {
+	const yearPart = bookableDateTime.year() === nowYear ? '' : bookableDateTime.format('YY년 ');
+	const body = bookableDateTime.format('M월 D일 H시');
+	const minutePart = bookableDateTime.minute() === 0 ? '' : bookableDateTime.format(' m분');
+	//TODO 이미 열린 경우 등 처리
+	return `${yearPart}${body}${minutePart}부터 예약 가능합니다.`;
 };
 
 const _convertByDayjs = (rawBookInfo) => {
@@ -37,9 +41,8 @@ const _convertByDayjs = (rawBookInfo) => {
 
 const getBookAdvice = (rawBookInfo) => {
 	const bookInfo = _convertByDayjs(rawBookInfo);
-	const {now} = bookInfo;
 	const bookableDateTime = _calcBookableDateTime(bookInfo);
-	return _makeResponse(bookableDateTime, now);
+	return _makeResponse(bookableDateTime, bookInfo.now.year());
 };
 
 module.exports = {
