@@ -9,11 +9,11 @@ const rawBookInfo = {
 	targetDate: '2022-06-08'
 };
 
-const bookInfo = calcModule._convertByDayjs(rawBookInfo);
+const bookInfo = calcModule.convertByDayjs(rawBookInfo);
 
 describe('dayjs 변환 테스트', () => {
 	const rawData = rawBookInfo;
-	const actual = calcModule._convertByDayjs(rawData);
+	const actual = calcModule.convertByDayjs(rawData);
 
 	it('bookInfo의 모든 키가 존재한다.', () => {
 		Object.keys(rawData)
@@ -33,45 +33,28 @@ describe('dayjs 변환 테스트', () => {
 	});
 });
 
-describe('nowTime이 openTime을 넘은 경우', () => {
-	const testBookInfo = Object.assign({}, bookInfo);
-	testBookInfo.openTime = testBookInfo.now
-		.subtract(1, 'second');
+describe('예약 가능일 계산 테스트(샘플 데이터 기준)', () => {
+	describe('nowTime이 openTime 이후일 때', () => {
+		const testBookInfo = Object.assign({}, bookInfo);
+		testBookInfo.openTime = testBookInfo.now
+			.subtract(1, 'second');
 
-	it('오픈 기간이 6일이어야 한다.', () => {
-		const actual = calcModule._calcOpenDateRange(
-			testBookInfo.now,
-			testBookInfo.lastOpenDate,
-			testBookInfo.openTime
-		);
-		assert.strictEqual(actual, 6);
+		it('예약일은 내일이어야 한다.', () => {
+			const actual = calcModule.calcBookableDateTime(testBookInfo);
+			const expect = testBookInfo.now
+				.add(1, 'day');
+			assert(expect.isSame(actual, 'day'));
+		});
 	});
 
-	it('다음날이어야 한다.', () => {
-		const actual = calcModule._calcBookableDateTime(testBookInfo);
-		const expect = testBookInfo.now
-			.add(1, 'day');
-		assert(expect.isSame(actual, 'day'));
-	});
-});
-
-describe('nowTime이 openTime을 넘지 않은 경우', () => {
-	const testBookInfo = Object.assign({}, bookInfo);
-	testBookInfo.openTime = testBookInfo.now
-		.add(1, 'second');
-
-	it('오픈 기간이 7일이어야 한다.', () => {
-		const actual = calcModule._calcOpenDateRange(
-			testBookInfo.now,
-			testBookInfo.lastOpenDate,
-			testBookInfo.openTime
-		);
-		assert.strictEqual(actual, 7);
-	});
-
-	it('당일이어야 한다.', () => {
-		const actual = calcModule._calcBookableDateTime(testBookInfo);
-		assert(testBookInfo.now
-			.isSame(actual, 'day'));
+	describe('nowTime이 openTime 이전일 때', () => {
+		const testBookInfo = Object.assign({}, bookInfo);
+		testBookInfo.openTime = testBookInfo.now
+			.add(1, 'second');
+		it('예약일은 오늘이어야 한다.', () => {
+			const actual = calcModule.calcBookableDateTime(testBookInfo);
+			assert(testBookInfo.now
+				.isSame(actual, 'day'));
+		});
 	});
 });
