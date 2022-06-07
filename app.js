@@ -20,4 +20,8 @@ app.post('/book-advice', (req, res) => {
 	res.send(displayModule.makeResponse(bookableDateTime, bookInfo.now.year()));
 });
 
+app.get('/now', (req, res) => {
+	res.send(new Date());
+});
+
 app.listen(process.env.PORT || port, () => console.log('Server Start in ', port));
