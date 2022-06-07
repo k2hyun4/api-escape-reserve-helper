@@ -13,6 +13,10 @@ app.get('/', (req, res) => {
 	res.send('Hello k2h!');
 });
 
+app.post('/', (req, res) => {
+	res.send('post call success!');
+});
+
 app.post('/book-advice', (req, res) => {
 	const bookInfo = calcModule.convertByDayjs(req.body);
 	const now = calcModule.getNowKst();
