@@ -15,13 +15,14 @@ app.get('/', (req, res) => {
 
 app.post('/book-advice', (req, res) => {
 	const bookInfo = calcModule.convertByDayjs(req.body);
-	const bookableDateTime = calcModule.calcBookableDateTime(bookInfo);
+	const now = calcModule.getNowKst();
+	const bookableDateTime = calcModule.calcBookableDateTime(bookInfo, now);
 
-	res.send(displayModule.makeResponse(bookableDateTime, bookInfo.now.year()));
+	res.send(displayModule.makeResponse(bookableDateTime, now.year()));
 });
 
 app.get('/now', (req, res) => {
-	res.send(new Date());
+	res.send(calcModule.getNowKst().format('YYYY-MM-DDTHH:mm:ss'));
 });
 
 app.listen(process.env.PORT || port, () => console.log('Server Start in ', port));

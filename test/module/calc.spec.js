@@ -2,8 +2,8 @@ const calcModule = require('../../module/calc');
 const assert = require('assert');
 const dayjs = require('dayjs');
 
+const now = dayjs('2022-06-01T10:00:00');
 const rawBookInfo = {
-	now: '2022-06-01T10:00:00',
 	lastOpenDate: '2022-06-07',
 	openTime: '00:00:00',
 	targetDate: '2022-06-08'
@@ -36,25 +36,21 @@ describe('dayjs 변환 테스트', () => {
 describe('예약 가능일 계산 테스트(샘플 데이터 기준)', () => {
 	describe('nowTime이 openTime 이후일 때', () => {
 		const testBookInfo = Object.assign({}, bookInfo);
-		testBookInfo.openTime = testBookInfo.now
-			.subtract(1, 'second');
+		testBookInfo.openTime = now.subtract(1, 'second');
 
 		it('예약일은 내일이어야 한다.', () => {
-			const actual = calcModule.calcBookableDateTime(testBookInfo);
-			const expect = testBookInfo.now
-				.add(1, 'day');
+			const actual = calcModule.calcBookableDateTime(testBookInfo, now);
+			const expect = now.add(1, 'day');
 			assert(expect.isSame(actual, 'day'));
 		});
 	});
 
 	describe('nowTime이 openTime 이전일 때', () => {
 		const testBookInfo = Object.assign({}, bookInfo);
-		testBookInfo.openTime = testBookInfo.now
-			.add(1, 'second');
+		testBookInfo.openTime = now.add(1, 'second');
 		it('예약일은 오늘이어야 한다.', () => {
-			const actual = calcModule.calcBookableDateTime(testBookInfo);
-			assert(testBookInfo.now
-				.isSame(actual, 'day'));
+			const actual = calcModule.calcBookableDateTime(testBookInfo, now);
+			assert(now.isSame(actual, 'day'));
 		});
 	});
 });
