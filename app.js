@@ -25,7 +25,9 @@ app.post('/book-advice', (req, res) => {
 	const now = calcModule.getNowKst();
 	const bookableDateTime = calcModule.calcBookableDateTime(bookInfo, now);
 
-	res.send(displayModule.makeResponse(bookableDateTime, now.year()));
+	res.status(200).send({
+		message: displayModule.makeResponse(bookableDateTime, now.year())
+	});
 });
 
 app.get('/now', (req, res) => {
