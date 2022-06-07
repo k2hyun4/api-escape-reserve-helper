@@ -14,7 +14,10 @@ app.get('/', (req, res) => {
 });
 
 app.post('/', (req, res) => {
-	res.send('post call success!');
+	res.status(200).send({
+		a: 1,
+		b: '2'
+	});
 });
 
 app.post('/book-advice', (req, res) => {
