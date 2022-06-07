@@ -9,7 +9,7 @@ const wrapByChatBotSimpleTextFormat = (result) => {
 	return {
 		version: '2.0',
 		template: {
-			output: [
+			outputs: [
 				{
 					simpleText: {
 						text: result
