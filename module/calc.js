@@ -28,9 +28,9 @@ const convertByDayjs = (rawBookInfo) => {
 	const clone = Object.assign({}, rawBookInfo);
 	Object.keys(clone)
 		.forEach(key => {
-			const convertedResult = dayjs(clone[key]);
+			const convertedResult = dayjs(clone[key].value);
 			clone[key] = convertedResult.isValid() ? convertedResult
-				: dayjs(clone[key], 'HH:mm:ss');
+				: dayjs(clone[key].value, 'HH:mm:ss');
 		});
 	return clone;
 }

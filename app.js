@@ -21,8 +21,7 @@ app.post('/', (req, res) => {
 });
 
 app.post('/book-advice', (req, res) => {
-	console.log('req data : ', req.body);
-	const bookInfo = calcModule.convertByDayjs(req.body);
+	const bookInfo = calcModule.convertByDayjs(req.body.action.params);
 	const now = calcModule.getNowKst();
 	const bookableDateTime = calcModule.calcBookableDateTime(bookInfo, now);
 
