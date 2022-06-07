@@ -24,10 +24,9 @@ app.post('/book-advice', (req, res) => {
 	const bookInfo = calcModule.convertByDayjs(req.body.action.params);
 	const now = calcModule.getNowKst();
 	const bookableDateTime = calcModule.calcBookableDateTime(bookInfo, now);
-
-	res.status(200).send({
-		message: displayModule.makeResponse(bookableDateTime, now.year())
-	});
+	const responseMessage = displayModule.makeResponse(bookableDateTime, now.year());
+	
+	res.status(200).send(displayModule.wrapByChatBotSimpleTextFormat(responseMessage));
 });
 
 app.get('/now', (req, res) => {

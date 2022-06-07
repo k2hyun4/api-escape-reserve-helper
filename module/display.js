@@ -5,6 +5,22 @@ const makeResponse = (bookableDateTime, nowYear) => {
 	return `${yearPart}${body}${minutePart}부터 예약 가능합니다.`;
 };
 
+const wrapByChatBotSimpleTextFormat = (result) => {
+	return {
+		version: '2.0',
+		template: {
+			output: [
+				{
+					simpleText: {
+						text: result
+					}
+				}
+			]
+		}
+	}
+};
+
 module.exports = {
-	makeResponse
+	makeResponse,
+	wrapByChatBotSimpleTextFormat
 }
