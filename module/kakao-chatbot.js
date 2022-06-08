@@ -18,12 +18,6 @@ const wrapForBasicCardFormat = (result) => {
 		basicCard: {
 			title: result.title,
 			description: result.description,
-			thumbnail: {
-				imageUrl: _resultImageUrl,
-				fixedRatio: true,
-				width: 0,
-				height: 0
-			},
 			buttons: [
 				{
 					action: 'block',
