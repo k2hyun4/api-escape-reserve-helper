@@ -10,23 +10,23 @@ app.use(express.urlencoded({
 	extended: true
 }));
 
-app.get('/', (req, res) => {
-	res.send('Hello k2h!');
-});
-
 app.post('/book-advice', (req, res) => {
-	const parsedData = kakaoChatbotModule.parseRequestParamValue(body);
+	const parsedData = kakaoChatbotModule.parseRequestParamValue(req.body);
 	const bookInfo = calcModule.convertByDayjs(parsedData);
 	const now = calcModule.getNow();
 
 	const bookableDateTime = calcModule.calcBookableDateTime(bookInfo, now);
 	const responseMessage = displayModule.makeResponse(bookableDateTime, now.year());
 
-	res.status(200).send(kakaoChatbotModule.wrapForSimpleTextFormat(responseMessage));
+	res.status(200).send(kakaoChatbotModule.wrapForBasicCardFormat(responseMessage));
 });
 
-app.get('/now', (req, res) => {
-	res.send(calcModule.getNow().format('YYYY-MM-DDTHH:mm:ss'));
+
+
+
+
+app.get('/', (req, res) => {
+	res.send('Hello k2h!');
 });
 
 app.listen(process.env.PORT || port, () => console.log('Server Start in ', port));

@@ -1,16 +1,46 @@
+const _calcBlockId = '629edf59ab89e678ee86fb3d';
+const _resultImageUrl = 'https://ibb.co/2YTMb5n';
+
 const wrapForSimpleTextFormat = (result) => {
-	return {
-		version: '2.0',
-		template: {
-			outputs: [
+	const layout = _makeDefaultFormat();
+	layout.template.outputs.push({
+		simpleText: {
+			text: result.title + result.description
+		}
+	});
+
+	return layout;
+};
+
+const wrapForBasicCardFormat = (result) => {
+	const layout = _makeDefaultFormat();
+	layout.template.outputs.push({
+		basicCard: {
+			title: result.title,
+			description: result.description,
+			thumbnail: {
+				imageUrl: _resultImageUrl
+			},
+			buttons: [
 				{
-					simpleText: {
-						text: result
-					}
+					action: 'block',
+					label: '다시 계산하기',
+					blockId: _calcBlockId
 				}
 			]
 		}
-	}
+	});
+
+	return layout;
+};
+
+const _makeDefaultFormat = () => {
+	return {
+		version: '2.0',
+		template: {
+			outputs: []
+		}
+	};
 };
 
 const parseRequestParamValue = (body) => {
@@ -24,5 +54,6 @@ const parseRequestParamValue = (body) => {
 
 module.exports = {
 	parseRequestParamValue,
-	wrapForSimpleTextFormat
+	wrapForSimpleTextFormat,
+	wrapForBasicCardFormat
 }
