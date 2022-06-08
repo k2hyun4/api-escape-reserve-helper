@@ -5,7 +5,7 @@ const makeResponse = (bookableDateTime, nowYear) => {
 
 	return {
 		title: `${yearPart}${body}${minutePart}`,
-		description: '부터 예약 가능합니다.'
+		description: '예약이 열립니다!'
 	};
 };
 
