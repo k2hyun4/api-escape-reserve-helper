@@ -24,20 +24,19 @@ const convertByDayjs = (rawBookInfo) => {
 	const clone = Object.assign({}, rawBookInfo);
 	Object.keys(clone)
 		.forEach(key => {
-			const refinedValue = clone[key].substring(33, clone[key].length - 2);
-			const convertedResult = dayjs(refinedValue);
+			const convertedResult = dayjs(clone[key]);
 			clone[key] = convertedResult.isValid() ? convertedResult
-				: dayjs(refinedValue, 'HH:mm:ss');
+				: dayjs(clone[key], 'HH:mm:ss');
 		});
 	return clone;
 }
 
-const getNowKst = () => {
+const getNow = () => {
 	return dayjs();
 };
 
 module.exports = {
 	convertByDayjs,
 	calcBookableDateTime,
-	getNowKst
+	getNow
 };

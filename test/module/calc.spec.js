@@ -4,15 +4,9 @@ const dayjs = require('dayjs');
 
 const now = dayjs('2022-06-01T10:00:00');
 const rawBookInfo = {
-	lastOpenDate: {
-		value: '2022-06-07'
-	},
-	openTime: {
-		value: '00:00:00'
-	},
-	targetDate: {
-		value: '2022-06-08'
-	}
+	lastOpenDate: '2022-06-07',
+	openTime: '00:00:00',
+	targetDate: '2022-06-08'
 };
 
 const bookInfo = calcModule.convertByDayjs(rawBookInfo);
