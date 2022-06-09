@@ -1,7 +1,19 @@
 const _calcBlockId = '629edf59ab89e678ee86fb3d';
-const _resultImageUrl = 'https://ibb.co/2YTMb5n';
 
-const wrapForSimpleTextFormat = (result) => {
+const responseCalcResult = (result) => {
+	return _wrapForBasicCardFormat(result, '다시 계산하기');
+};
+
+const responseCheck = () => {
+	return _wrapForBasicCardFormat(
+		{
+			title: '원하는 기능을 선택해주세요', 
+			description: '반응이 없으면 잠시 후 버튼을 다시 클릭해주세요.'
+		}, 
+		'예약일 계산하기');
+};
+
+const _wrapForSimpleTextFormat = (result) => {
 	const layout = _makeDefaultFormat();
 	layout.template.outputs.push({
 		simpleText: {
@@ -12,7 +24,7 @@ const wrapForSimpleTextFormat = (result) => {
 	return layout;
 };
 
-const wrapForBasicCardFormat = (result) => {
+const _wrapForBasicCardFormat = (result, buttonLabel) => {
 	const layout = _makeDefaultFormat();
 	layout.template.outputs.push({
 		basicCard: {
@@ -21,7 +33,7 @@ const wrapForBasicCardFormat = (result) => {
 			buttons: [
 				{
 					action: 'block',
-					label: '다시 계산하기',
+					label: buttonLabel,
 					blockId: _calcBlockId
 				}
 			]
@@ -51,6 +63,6 @@ const parseRequestParamValue = (body) => {
 
 module.exports = {
 	parseRequestParamValue,
-	wrapForSimpleTextFormat,
-	wrapForBasicCardFormat
+	responseCheck,
+	responseCalcResult
 }

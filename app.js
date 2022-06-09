@@ -18,9 +18,12 @@ app.post('/book-advice', (req, res) => {
 	const bookableDateTime = calcModule.calcBookableDateTime(bookInfo, now);
 	const responseMessage = displayModule.makeResponse(bookableDateTime, now.year());
 
-	res.status(200).send(kakaoChatbotModule.wrapForBasicCardFormat(responseMessage));
+	res.status(200).send(kakaoChatbotModule.responseCalcResult(responseMessage));
 });
 
+app.post('/check', (req, res) => {
+	res.status(200).send(kakaoChatbotModule.responseCheck());
+});
 
 
 
