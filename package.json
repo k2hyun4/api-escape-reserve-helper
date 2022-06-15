@@ -4,8 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "node app.js",
-        "dev": "nodemon app.js",
+        "start": "node index.js",
+        "dev": "nodemon index.js",
         "test": "mocha -w ./test/module"
     },
     "keywords": [],
@@ -13,6 +13,7 @@
     "license": "ISC",
     "dependencies": {
         "dayjs": "^1.11.2",
+        "deta": "^1.1.0",
         "express": "^4.18.1"
     },
     "devDependencies": {
